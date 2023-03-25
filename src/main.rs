@@ -3,12 +3,16 @@
 #[macro_use]
 extern crate rocket;
 
-#[get("/api/hello")]
-async fn hello() -> String {
-    format!("hello")
+mod api;
+
+#[get("/")]
+fn index() -> String {
+    format!("")
 }
 
 #[launch]
 async fn rocket() -> _ {
-    rocket::build().mount("/", routes![hello])
+    rocket::build()
+        .mount("/", routes![index])
+        .mount("/api", api::routes())
 }
