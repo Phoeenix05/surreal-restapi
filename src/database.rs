@@ -40,11 +40,11 @@ pub struct DbFairing;
 #[serde(crate = "rocket::serde")]
 struct DbConfig {
     /// Database namespace
-    ns: String,
+    namespace: String,
     /// Database name
-    db: String,
+    database: String,
     /// Data store name
-    ds: String,
+    datastore: String,
 }
 
 #[rocket::async_trait]
@@ -59,7 +59,7 @@ impl Fairing for DbFairing {
     async fn on_ignite(&self, rocket: Rocket<Build>) -> Result {
         let figment = rocket.figment().clone();
         let db_config: DbConfig = figment.select("database").extract().unwrap();
-        let db = Db::new(&db_config.ns, &db_config.db, &db_config.ds).await;
+        let db = Db::new(&db_config.namespace, &db_config.database, &db_config.datastore).await;
 
         Ok(rocket.manage(db))
     }
