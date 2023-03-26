@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# anyhow = "1.0.70"
-rocket = "0.5.0-rc.1"
+rocket = { version = "0.5.0-rc.3", features = ["json"] }
+serde = { version = "1.0.158", features = ["derive"] }
 # surreal = "0.4.1"
 # tracing = "0.1.37"
 # tracing-subscriber = "0.3.16"
