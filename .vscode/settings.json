@@ -1,0 +1,4 @@
+{
+    // [off] Because of cargo watch. Don't want unneccessary reloads
+    "files.autoSave": "afterDelay"
+}

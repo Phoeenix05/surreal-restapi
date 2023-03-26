@@ -1,0 +1,4 @@
+[database]
+namespace = "user"
+database = "restapi"
+datastore = "memory"

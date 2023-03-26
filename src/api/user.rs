@@ -2,6 +2,9 @@
 
 use rocket::http::Status;
 use rocket::serde::{json::Json, Serialize};
+use rocket::State;
+
+use crate::database::Db;
 
 #[derive(Serialize)]
 #[serde(crate = "rocket::serde")]
@@ -16,12 +19,12 @@ pub struct User<'r> {
 }
 
 #[get("/user/<name>")]
-pub async fn get(name: String) -> String {
+pub async fn get(name: String, db: &State<Db>) -> String {
     format!("{}", name)
 }
 
 #[put("/user/<name>/update?<user>")]
-pub fn update(name: String, user: User<'_>) -> Json<Response<User>> {
+pub fn update<'a>(name: String, user: User<'a>, db: &State<Db>) -> Json<Response<User<'a>>> {
     let response = Response {
         status_code: Status::Ok.to_string(),
         data: user,
@@ -30,7 +33,7 @@ pub fn update(name: String, user: User<'_>) -> Json<Response<User>> {
 }
 
 #[delete("/user/<name>/delete")]
-pub fn delete(name: String) -> Json<Response<String>> {
+pub fn delete(name: String, db: &State<Db>) -> Json<Response<String>> {
     let response = Response {
         status_code: Status::Ok.to_string(),
         data: name,
@@ -39,7 +42,7 @@ pub fn delete(name: String) -> Json<Response<String>> {
 }
 
 #[post("/user/create?<user>")]
-pub fn create(user: User<'_>) -> Json<Response<User>> {
+pub fn create<'a>(user: User<'a>, db: &State<Db>) -> Json<Response<User<'a>>> {
     let response = Response {
         status_code: Status::Ok.to_string(),
         data: user,
